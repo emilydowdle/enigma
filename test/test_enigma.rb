@@ -1,28 +1,18 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-require_relative '../lib/rotate'
+require_relative '../lib/rotator'
+require_relative '../lib/map_a_rotation'
 
-
-class TestEnigma < Minitest::Test
+class TestRotator < Minitest::Test
 
   def test_initialize
-    code = Rotate.new("34567")
-    assert code
+    code = Rotator.new("34567")
+
+
+
+    assert_equal "", output
   end
 
-  def test_key_string_to_array
-    code = Rotate.new("34567")
-
-    assert_equal ["3","4","5","6","7"], code.encrypt
-  end
-
-  # def test_rotation_output
-  #   code = Rotate.new("34567")
-  #   code.encrypt
-  #   code.rotation_output
-  #   assert_equal "",
-  #
-  # end
 
 end
