@@ -1,5 +1,0 @@
-class Rotate
-
-
-
-end
