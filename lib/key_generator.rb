@@ -1,4 +1,4 @@
-class Key_Generator
+class KeyGenerator
 
   def initialize
   end

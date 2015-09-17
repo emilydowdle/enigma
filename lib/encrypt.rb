@@ -1,6 +1,6 @@
-require_relative '../lib/enigma'
-require_relative '../lib/key_generator'
-require_relative '../lib/offset_generator'
+require_relative 'enigma'
+require_relative 'key_generator'
+require_relative 'offset_generator'
 
 
 class Encrypt
@@ -34,7 +34,7 @@ class Encrypt
   end
 
   def create_secret_key
-    secret_key = Key_Generator.new
+    secret_key = KeyGenerator.new
     secret_key.create_key
   end
 
