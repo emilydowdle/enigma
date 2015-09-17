@@ -5,18 +5,24 @@ class Offset_Generator
   def initialize
   end
 
+  def create_offset
+    date_string = find_date
+    sqr_num = square_date(date_string)
+    offset_array = extract_last_4_digits_of_sqr_date(sqr_num)
+  end
+
   def find_date
     time = Time.new
-    date_string = time.strftime("%d%m%y")
+    time.strftime("%d%m%y")
   end
 
   def square_date(string)
-    sqr_num = string.to_i ** 2
+    string.to_i ** 2
   end
 
   def extract_last_4_digits_of_sqr_date(num)
     arr = num.to_s.chars
-    offset = arr.last(4).join
+    arr.last(4)
   end
 
 end
