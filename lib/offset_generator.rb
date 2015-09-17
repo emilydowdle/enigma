@@ -22,7 +22,7 @@ class Offset_Generator
 
   def extract_last_4_digits_of_sqr_date(num)
     arr = num.to_s.chars
-    arr.last(4)
+    arr.last(4).map {|num| num.to_i}
   end
 
 end

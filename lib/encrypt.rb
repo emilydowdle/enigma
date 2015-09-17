@@ -1,6 +1,13 @@
 require_relative '../lib/enigma'
+require_relative '../lib/key_generator'
+require_relative '../lib/offset_generator'
+
 
 class Encrypt
+
+  attr_accessor :key_array
+
+  CHAR_MAP = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
 
   def initialize
   end
@@ -40,7 +47,7 @@ class Encrypt
     rotations = []
     counter = 0
     key_array.each do |num|
-      rotations << key_array + offset_array[counter]
+      rotations << num + offset_array[counter]
       counter += 1
     end
     rotations
@@ -49,13 +56,21 @@ class Encrypt
   def encrypt_message(array, rotations)
     counter = 0
     encrypted = []
-    char_map = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
     array.each_with_index do |letter, index|
-      location = char_map.index(letter)
-      encrypted << char_map[(location + rotations[counter]) % char_map.length]
-      counter = (counter + 1) % rotations.length
+      if !CHAR_MAP.include? letter
+        encrypted << letter
+      else
+        location = CHAR_MAP.index(letter)
+        encrypted << CHAR_MAP[(location + rotations[counter]) % CHAR_MAP.length]
+        counter = (counter + 1) % rotations.length
+      end
     end
     encrypted.join
+  end
+
+  def output_date
+    date = Offset_Generator.new
+    date_output = date.find_date
   end
 
 
@@ -69,4 +84,4 @@ message = Encrypt.new
 message.encrypt_runner(input_filename, output_filename)
 
 puts "Wahoo! Done!"
-# "Created #{ARGV[1]} with the key #{!!!Key_Generator.new.key} and date #{!!!date}"
+"Created #{input_filename} with the key #{key_array.join} and date #{date_output}"

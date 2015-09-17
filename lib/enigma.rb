@@ -1,4 +1,4 @@
-require_relative '../lib/encrypt'
+# require_relative '../lib/encrypt'
 
 class Enigma
 

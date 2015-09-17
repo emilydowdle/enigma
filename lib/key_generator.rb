@@ -23,7 +23,7 @@ class Key_Generator
       key_array << "#{key[counter]}#{key[counter + 1]}".to_i
       counter += 1
     end
-    key_array
+    key_array[0..-2]
   end
 
 end

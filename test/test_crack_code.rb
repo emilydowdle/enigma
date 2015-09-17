@@ -58,11 +58,11 @@ class TestCrackCode < Minitest::Test
     assert_equal [27, 15, 50, 21], code.subtract_date_offset_from_rotations(rotations, offset)
   end
 
-  def test_find_key
+  def test_find_key_from_rotations
     code = Crack_Code.new
-    key_array = [27, 15, 50, 21]
+    key_array = [41, 15, 52, 21]
 
-    assert_equal [14, 19, 6, 2], code.final_secret_key(key_array)
+    assert_equal "41521", code.final_secret_key(key_array)
   end
 
 end

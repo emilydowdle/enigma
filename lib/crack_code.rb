@@ -11,6 +11,8 @@ class Crack_Code
     ordered_rotations = rotate_cracked_rotations(rotations, array)
     date_offset = pull_date_offset_from_rotation(date_string)
     key_array = subtract_date_offset_from_rotations(rotations, date_offset)
+    secret_key = final_secret_key(key_array)
+    # send to decrypt for decryption
   end
 
   def last_four_of_array(array)
@@ -52,13 +54,13 @@ class Crack_Code
   end
 
   def final_secret_key(key_array)
-    key = []
-    string = key_array.to_s
+    key = ""
+    string = key_array.join
     key << string[0..1]
-
-    # key << string[4..5]
-    # key << string[-1]
+    key << string[4..5]
+    key << string[7]
   end
+
   # def decrypt_message_without_key(array)
   #   counter = 0
   #   decrypted = []
