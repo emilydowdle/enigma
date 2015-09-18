@@ -17,6 +17,9 @@ class KeyGenerator
   end
 
   def create_key_array(key)
+    if key.class == String
+      key = key.chars
+    end
     counter = 0
     key_array = []
     key.each_with_index do |num, index|

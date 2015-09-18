@@ -23,8 +23,8 @@ class Encrypt
     final_output.write_file(encrypted_message, output)
   end
 
-  def create_message_array(secret_message_string)
-    secret_message_string.chars
+  def create_message_array(string)
+    string.chars
   end
 
   def process_rotation_arrays
@@ -39,7 +39,7 @@ class Encrypt
   end
 
   def create_date_offset
-    offset = Offset_Generator.new
+    offset = OffsetGenerator.new
     offset.create_offset
   end
 
@@ -69,7 +69,7 @@ class Encrypt
   end
 
   def output_date
-    date = Offset_Generator.new
+    date = OffsetGenerator.new
     date_output = date.find_date
   end
 
@@ -84,4 +84,4 @@ message = Encrypt.new
 message.encrypt_runner(input_filename, output_filename)
 
 puts "Wahoo! Done!"
-"Created #{input_filename} with the key #{key_array.join} and date #{date_output}"
+# "Created #{input_filename} with the key #{key_array.join} and date #{date_output}"

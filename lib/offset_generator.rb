@@ -1,4 +1,4 @@
-class Offset_Generator
+class OffsetGenerator
 
   attr_accessor :date_string
 
@@ -7,6 +7,11 @@ class Offset_Generator
 
   def create_offset
     date_string = find_date
+    sqr_num = square_date(date_string)
+    offset_array = extract_last_4_digits_of_sqr_date(sqr_num)
+  end
+
+  def inherit_offset(date_string)
     sqr_num = square_date(date_string)
     offset_array = extract_last_4_digits_of_sqr_date(sqr_num)
   end

@@ -5,14 +5,14 @@ require_relative '../lib/crack_code'
 
 class TestCrackCode < Minitest::Test
   def test_find_last_four
-    code = Crack_Code.new
+    code = CrackCode.new
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
 
     assert_equal [".", ".", "e", "n"], code.last_four_of_array(array)
   end
 
   def test_find_final_secret_key
-    code = Crack_Code.new
+    code = CrackCode.new
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     final_digits = ["o", "o", "k", "m"]
 
@@ -20,7 +20,7 @@ class TestCrackCode < Minitest::Test
   end
   #
   def test_find_secret_key_from_different_array
-    code = Crack_Code.new
+    code = CrackCode.new
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     final_digits = ["t", "t", "m", "u"]
 
@@ -28,7 +28,7 @@ class TestCrackCode < Minitest::Test
   end
 
   def test_rotate_cracked_rotations
-    code = Crack_Code.new
+    code = CrackCode.new
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     rotations = [21, 21, 8, 7]
 
@@ -36,7 +36,7 @@ class TestCrackCode < Minitest::Test
   end
 
   def test_rotate_cracked_rotations_different_array
-    code = Crack_Code.new
+    code = CrackCode.new
     array = ["g", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     rotations = [21, 21, 8, 7]
 
@@ -44,14 +44,14 @@ class TestCrackCode < Minitest::Test
   end
 
   def test_pull_date_offset
-    code = Crack_Code.new
+    code = CrackCode.new
     rotations = [21, 21, 8, 7]
 
     assert_equal [7, 2, 2, 5], code.pull_date_offset_from_rotation("170915")
   end
 
   def test_subtract_date_offset
-    code = Crack_Code.new
+    code = CrackCode.new
     rotations = [34, 17, 52, 26]
     offset = [7, 2, 2, 5]
 
@@ -59,7 +59,7 @@ class TestCrackCode < Minitest::Test
   end
 
   def test_find_key_from_rotations
-    code = Crack_Code.new
+    code = CrackCode.new
     key_array = [41, 15, 52, 21]
 
     assert_equal "41521", code.final_secret_key(key_array)
