@@ -2,6 +2,7 @@ require_relative 'enigma'
 require_relative 'key_generator'
 require_relative 'offset_generator'
 require_relative 'enigma_messages'
+require 'pry'
 
 class Encrypt
 
@@ -61,6 +62,7 @@ class Encrypt
     key_array.each do |num|
       rotations << num + offset_array[counter]
       counter += 1
+
     end
     rotations
   end
