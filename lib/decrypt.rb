@@ -1,6 +1,7 @@
 require_relative 'enigma'
 require_relative 'key_generator'
 require_relative 'offset_generator'
+require_relative 'enigma_messages'
 
 class Decrypt
 
@@ -15,6 +16,7 @@ class Decrypt
     temp_message_array = create_message_array(encrypted_message_string)
 
     key_array = find_key_array(key)
+    puts "Created #{output} with the key #{key} and date #{date}"
     offset_array = find_offset_array(date)
     rotations =  add_secret_key_and_offset(key_array, offset_array)
 
@@ -73,6 +75,3 @@ date = ARGV[3]
 
 message = Decrypt.new
 message.decrypt_runner(input, output, key, date)
-
-puts "Wahoo! Done!"
-# "Created #{input_filename} with the key #{key_array.join} and date #{date_output}"

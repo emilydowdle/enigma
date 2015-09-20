@@ -1,3 +1,6 @@
+require_relative 'enigma'
+require_relative 'enigma_messages'
+
 class CrackCode
 
   CHAR_MAP = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", " ", ".", ","]
@@ -5,18 +8,41 @@ class CrackCode
   def initialize
   end
 
-  def runner(array)
-    final_digits = last_four_of_array(array)
-    rotations = find_secret_key(array, final_digits)
-    ordered_rotations = rotate_cracked_rotations(rotations, array)
-    date_offset = pull_date_offset_from_rotation(date_string)
+  def crack_runner(input, output, date)
+
+    encrypted_message_string = read_message_to_encrypt(input)
+    temp_message_array = create_message_array(encrypted_message_string)
+
+
+    final_digits = last_four_of_array(temp_message_array)
+
+    rotations = find_secret_key(temp_message_array, final_digits)
+    ordered_rotations = rotate_cracked_rotations(rotations, temp_message_array)
+    date_offset = pull_date_offset_from_rotation(date)
     key_array = subtract_date_offset_from_rotations(rotations, date_offset)
-    secret_key = final_secret_key(key_array)
-    # send to decrypt for decryption
+    secret_key = EnigmaWriter.new.final_secret_key(key_array)
+    require 'pry';binding.pry
+    printout = EnigmaWriter.new.crack_print(output, secret_key)
+    # write_encrypted_message_to_file(cracked_message, output)
+  end
+
+  def read_message_to_encrypt(input)
+    encrypted_message = Enigma.new
+    encrypted_message.read_file(input)
+  end
+
+  def write_encrypted_message_to_file(cracked_message, output)
+    final_output = Enigma.new
+    final_output.write_file(cracked_message, output)
+  end
+
+  def create_message_array(string)
+    string.chars
   end
 
   def last_four_of_array(array)
-    array[-7..-4]
+    array[-8..-5]
+
   end
 
   def find_secret_key(array, final_digits)
@@ -53,13 +79,13 @@ class CrackCode
     key_array
   end
 
-  def final_secret_key(key_array)
-    key = ""
-    string = key_array.join
-    key << string[0..1]
-    key << string[4..5]
-    key << string[7]
-  end
+  # def final_secret_key(key_array)
+  #   key = ""
+  #   string = key_array.join
+  #   key << string[0..1]
+  #   key << string[4..5]
+  #   key << string[7]
+  # end
 
   # def decrypt_message_without_key(array)
   #   counter = 0
@@ -82,3 +108,10 @@ class CrackCode
 
 
 end
+
+input_filename = ARGV[0]
+output_filename = ARGV[1]
+date = ARGV[2]
+
+message = CrackCode.new
+message.crack_runner(input_filename, output_filename, date)
