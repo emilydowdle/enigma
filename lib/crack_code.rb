@@ -14,11 +14,15 @@ class CrackCode
     temp_message_array = create_message_array(encrypted_message_string)
     ordered_rotations = decrypt_rotational_array(temp_message_array)
     cracked_message = decrypt_message_without_key(temp_message_array, ordered_rotations)
-    date_offset = pull_date_offset_from_rotation(date)
-    key_array = subtract_date_offset_from_rotations(ordered_rotations, date_offset)
-      # secret_key = EnigmaWriter.new.final_secret_key(key_array)
-      # printout = EnigmaWriter.new.crack_print(output, secret_key)
+    key_array = distill_secret_key_array(date, ordered_rotations)
     write_encrypted_message_to_file(cracked_message, output)
+    EnigmaWriter.new.crack_print(output, key_array, date)
+
+  end
+
+  def distill_secret_key_array(date, ordered_rotations)
+    date_offset = pull_date_offset_from_rotation(date)
+    subtract_date_offset_from_rotations(ordered_rotations, date_offset)
   end
 
   def decrypt_rotational_array(temp_message_array)
