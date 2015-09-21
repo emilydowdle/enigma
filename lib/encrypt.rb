@@ -15,10 +15,8 @@ class Encrypt
 
   def encrypt_runner(input, output)
     secret_message_string = read_message_to_encrypt(input)
-
     temp_message_array = create_message_array(secret_message_string)
     rotations = process_rotation_arrays(output)
-
     encrypted_message = encrypt_message(temp_message_array, rotations)
     write_encrypted_message_to_file(encrypted_message, output)
   end
@@ -39,12 +37,14 @@ class Encrypt
 
   def process_rotation_arrays(output)
     key_array = create_secret_key
-    printout = EnigmaWriter.new.encrypt_print(output, key_array)
+    print_encryption_output(output, key_array)
     offset_array = create_date_offset
     add_secret_key_and_offset(key_array, offset_array)
   end
 
-
+  def print_encryption_output(output, key_array)
+    EnigmaWriter.new.encrypt_print(output, key_array)
+  end
 
   def create_secret_key
     secret_key = KeyGenerator.new
@@ -62,7 +62,6 @@ class Encrypt
     key_array.each do |num|
       rotations << num + offset_array[counter]
       counter += 1
-
     end
     rotations
   end

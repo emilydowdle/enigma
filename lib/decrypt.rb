@@ -11,18 +11,23 @@ class Decrypt
   end
 
   def decrypt_runner(input, output, key, date)
-    encrypted_message = Enigma.new
-    encrypted_message_string = encrypted_message.read_file(input)
+    encrypted_message_string = read_message_to_decrypt(input)
     temp_message_array = create_message_array(encrypted_message_string)
-
     key_array = find_key_array(key)
-    puts "Created #{output} with the key #{key} and date #{date}"
-    offset_array = find_offset_array(date)
-    rotations =  add_secret_key_and_offset(key_array, offset_array)
-
+    rotations = create_rotational_array(key_array, date)
     decrypted_message = decrypt_message(temp_message_array, rotations)
+    write_decrypted_message_to_file(decrypted_message, output, key_array, date)
+  end
+
+  def read_message_to_decrypt(input)
+    encrypted_message = Enigma.new
+    encrypted_message.read_file(input)
+  end
+
+  def write_decrypted_message_to_file(decrypted_message, output, key_array, date)
     final_output = Enigma.new
     final_output.write_file(decrypted_message, output)
+    EnigmaWriter.new.decrypt_print(output, key_array, date)
   end
 
   def create_message_array(string)
@@ -34,11 +39,14 @@ class Decrypt
     key.create_key_array(key_string)
   end
 
+  def create_rotational_array(key_array, date)
+    offset_array = find_offset_array(date)
+    add_secret_key_and_offset(key_array, offset_array)
+  end
+
   def find_offset_array(date_string)
     offset = OffsetGenerator.new
     offset.inherit_offset(date_string)
-    # require 'pry'; binding.pry
-
   end
 
   def add_secret_key_and_offset(key_array, offset_array)

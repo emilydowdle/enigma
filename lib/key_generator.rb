@@ -15,7 +15,7 @@ class KeyGenerator
   def random_generator
     key = []
     5.times do
-      key << rand(0..9)
+      key << rand(1..9)
     end
     key
   end

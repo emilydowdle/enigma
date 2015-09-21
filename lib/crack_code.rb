@@ -9,24 +9,22 @@ class CrackCode
   def initialize
   end
 
-# actual code: 32966
-# code output: 25295
-
   def crack_runner(input, output, date)
     encrypted_message_string = read_message_to_encrypt(input)
     temp_message_array = create_message_array(encrypted_message_string)
+    ordered_rotations = decrypt_rotational_array(temp_message_array)
+    cracked_message = decrypt_message_without_key(temp_message_array, ordered_rotations)
+    date_offset = pull_date_offset_from_rotation(date)
+    key_array = subtract_date_offset_from_rotations(ordered_rotations, date_offset)
+      # secret_key = EnigmaWriter.new.final_secret_key(key_array)
+      # printout = EnigmaWriter.new.crack_print(output, secret_key)
+    write_encrypted_message_to_file(cracked_message, output)
+  end
 
+  def decrypt_rotational_array(temp_message_array)
     final_digits = last_four_of_array(temp_message_array)
     rotations = find_secret_key(temp_message_array, final_digits)
-    ordered_rotations = rotate_cracked_rotations(rotations, temp_message_array)
-
-    cracked_message = decrypt_message_without_key(temp_message_array, ordered_rotations)
-
-    date_offset = pull_date_offset_from_rotation(date)
-      key_array = subtract_date_offset_from_rotations(rotations, date_offset)
-      secret_key = EnigmaWriter.new.final_secret_key(key_array)
-      printout = EnigmaWriter.new.crack_print(output, secret_key)
-    write_encrypted_message_to_file(cracked_message, output)
+    rotate_cracked_rotations(rotations, temp_message_array)
   end
 
   def read_message_to_encrypt(input)
@@ -59,7 +57,6 @@ class CrackCode
       counter += 1
     end
     rotations
-
   end
 
   def rotate_cracked_rotations(rotations, array)
@@ -91,25 +88,12 @@ class CrackCode
   def subtract_date_offset_from_rotations(rotation_array, offset_array)
     counter = 0
     key_array = []
-    # binding.pry
     rotation_array.each do |num|
       key_array << num - offset_array[counter]
       counter += 1
     end
     key_array
   end
-
-  # def final_secret_key(key_array)
-  #   key = ""
-  #   string = key_array.join
-  #   key << string[0..1]
-  #   key << string[4..5]
-  #   key << string[7]
-  # end
-
-
-
-
 
 end
 
