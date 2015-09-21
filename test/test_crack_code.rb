@@ -8,7 +8,7 @@ class TestCrackCode < Minitest::Test
     code = CrackCode.new
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
 
-    assert_equal [".", ".", "e", "n"], code.last_four_of_array(array)
+    assert_equal ["e", ".", ".", "e"], code.last_four_of_array(array)
   end
 
   def test_find_final_secret_key
@@ -32,7 +32,7 @@ class TestCrackCode < Minitest::Test
     array = ["g", "o", "o", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     rotations = [21, 21, 8, 7]
 
-    assert_equal [21, 8, 7, 21], code.rotate_cracked_rotations(rotations, array)
+    assert_equal [8, 7, 21, 21], code.rotate_cracked_rotations(rotations, array)
   end
 
   def test_rotate_cracked_rotations_different_array
@@ -40,7 +40,7 @@ class TestCrackCode < Minitest::Test
     array = ["g", "d", "b", "y", "e", ".", ".", "e", "n", "d", ".", "."]
     rotations = [21, 21, 8, 7]
 
-    assert_equal [7, 21, 21, 8], code.rotate_cracked_rotations(rotations, array)
+    assert_equal [21, 21, 8, 7], code.rotate_cracked_rotations(rotations, array)
   end
 
   def test_pull_date_offset
@@ -56,13 +56,6 @@ class TestCrackCode < Minitest::Test
     offset = [7, 2, 2, 5]
 
     assert_equal [27, 15, 50, 21], code.subtract_date_offset_from_rotations(rotations, offset)
-  end
-
-  def test_find_key_from_rotations
-    code = CrackCode.new
-    key_array = [41, 15, 52, 21]
-
-    assert_equal "41521", code.final_secret_key(key_array)
   end
 
 end

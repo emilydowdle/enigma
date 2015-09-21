@@ -17,7 +17,6 @@ class CrackCode
     key_array = distill_secret_key_array(date, ordered_rotations)
     write_encrypted_message_to_file(cracked_message, output)
     EnigmaWriter.new.crack_print(output, key_array, date)
-
   end
 
   def distill_secret_key_array(date, ordered_rotations)
